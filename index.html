@@ -29,28 +29,29 @@ body {
   overflow: hidden;
 }
 
-/* Floating whales */
+/* Floating whales (slow & calm) */
 .whale {
   position: absolute;
-  font-size: 3rem;
-  opacity: 0.25;
-  animation: float 16s infinite ease-in-out;
+  font-size: 3.2rem;
+  opacity: 0.22;
+  animation: float 38s infinite ease-in-out;
 }
-.whale.w1 { top: 10%; left: 6%; animation-duration: 18s; }
-.whale.w2 { bottom: 18%; right: 8%; animation-duration: 22s; }
-.whale.w3 { top: 42%; right: 18%; animation-duration: 15s; }
+
+.whale.w1 { top: 12%; left: 8%; }
+.whale.w2 { bottom: 15%; right: 10%; animation-duration: 46s; }
+.whale.w3 { top: 45%; right: 20%; animation-duration: 42s; }
 
 @keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-24px); }
   100% { transform: translateY(0); }
 }
 
 .card {
   background: rgba(0, 30, 70, 0.6);
   backdrop-filter: blur(9px);
-  padding: 32px 24px;
-  border-radius: 24px;
+  padding: 34px 26px;
+  border-radius: 26px;
   max-width: 460px;
   width: 92%;
   text-align: center;
@@ -58,11 +59,11 @@ body {
 }
 
 .logo {
-  font-size: 3.4rem;
+  font-size: 3.6rem;
 }
 
 h1 {
-  font-size: 2.3rem;
+  font-size: 2.4rem;
   margin-top: 6px;
 }
 
@@ -73,32 +74,45 @@ p {
 }
 
 .ca-box {
-  margin-top: 20px;
-  background: rgba(255,255,255,0.14);
-  padding: 14px;
-  border-radius: 14px;
-  font-size: 0.8rem;
+  margin-top: 22px;
+  background: rgba(255,255,255,0.16);
+  padding: 16px;
+  border-radius: 16px;
 }
 
 .label {
   font-size: 0.65rem;
   letter-spacing: 1.2px;
   opacity: 0.75;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
+/* CONTRACT ADDRESS */
 .ca {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
   white-space: nowrap;
   overflow-x: auto;
   scrollbar-width: none;
+  cursor: pointer;
+  user-select: none;
 }
 .ca::-webkit-scrollbar { display: none; }
 
+.copied {
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: #b9e6ff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 /* DEX Button */
 .dex-btn {
-  margin-top: 18px;
+  margin-top: 20px;
   display: inline-block;
-  padding: 12px 22px;
+  padding: 13px 26px;
   border-radius: 999px;
   background: linear-gradient(135deg, #4fb4ff, #1c7ed6);
   color: #fff;
@@ -111,26 +125,11 @@ p {
 
 .dex-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.45);
-}
-
-footer {
-  margin-top: 18px;
-  font-size: 0.75rem;
-  opacity: 0.85;
-}
-
-footer a {
-  color: #a8d8ff;
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.45);
 }
 
 @media (min-width: 768px) {
-  h1 { font-size: 2.6rem; }
+  h1 { font-size: 2.7rem; }
 }
 </style>
 </head>
@@ -148,14 +147,15 @@ footer a:hover {
 
   <p>
     Big heart. Deep waters.<br>
-    A true whale of the meme ocean.
+    A gentle giant of the meme ocean.
   </p>
 
   <div class="ca-box">
     <div class="label">CONTRACT ADDRESS</div>
-    <div class="ca">
+    <div class="ca" id="ca">
       7TBD7QD9kyzwADErHusNtVWzSBdtG8j4aYJuXadNpump
     </div>
+    <div class="copied" id="copied">🐳 Copied!</div>
   </div>
 
   <a
@@ -165,16 +165,18 @@ footer a:hover {
   >
     🌊 View on Dexscreener
   </a>
-
-  <footer>
-    <a
-      href="https://dexscreener.com/solana/7lwmacukivl9zkrzyjrdqer7iaugjyzsuevmxct9v4zk"
-      target="_blank"
-    >
-      dexscreener.com
-    </a>
-  </footer>
 </div>
+
+<script>
+  const ca = document.getElementById("ca");
+  const copied = document.getElementById("copied");
+
+  ca.addEventListener("click", () => {
+    navigator.clipboard.writeText(ca.innerText.trim());
+    copied.style.opacity = 1;
+    setTimeout(() => copied.style.opacity = 0, 1600);
+  });
+</script>
 
 </body>
 </html>
